@@ -3,7 +3,7 @@ import { useState, useRef } from 'react'
 import Countdown, { zeroPad } from 'react-countdown'
 import { CircularProgressbar } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
-
+import ringer from './assets/sound.wav'
 function App() {
   const Timeref = useRef()
   const WorkTime = useRef()
@@ -22,7 +22,8 @@ function App() {
     getmiliseconds += parseInt(e.slice(6)) * 1000
     return getmiliseconds
   }
-
+  const audio = new Audio(ringer)
+  audio.loop = true
   const renderer = ({ hours, minutes, seconds, completed, api }) => {
     if (completed) {
       return <CircularProgressbar className="warning" value={100} text={`Value must be > 0`} />
@@ -119,6 +120,8 @@ function App() {
           onComplete={() => {
             if (handlesetMiliseconds(time) > 0) {
               setBreak(!isBreak)
+              audio.loop = false
+              audio.play()
             }
           }}
         />

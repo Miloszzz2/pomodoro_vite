@@ -1,0 +1,101 @@
+* {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
+  overflow: hidden;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.App {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  padding-bottom: 20px;
+  background-color: rgba(9, 9, 9, 0.8);
+  padding: 30px;
+}
+
+.countdown {
+  font-size: 70px;
+  margin-bottom: 20px;
+}
+
+.CircularProgressbar {
+  padding-top: 10px;
+  height: 500px;
+  margin-bottom: 20px;
+}
+
+.CircularProgressbar-text {
+  font-size: 16px !important;
+  fill: rgb(252, 74, 74) !important;
+}
+
+.CircularProgressbar2 .CircularProgressbar-text {
+  fill: rgb(74, 252, 89) !important;
+}
+
+.CircularProgressbar2 {
+  fill: rgb(74, 252, 89) !important;
+}
+
+.CircularProgressbar-trail {
+  stroke: transparent !important;
+}
+
+.CircularProgressbar-path {
+  stroke-width: 5;
+  stroke: rgb(252, 74, 74) !important;
+}
+
+.CircularProgressbar2 .CircularProgressbar-path {
+  stroke: rgb(74, 252, 89) !important;
+}
+
+.intervals {
+  text-align: center;
+}
+
+.App input {
+  margin-top: 20px;
+  padding: 5px 10px;
+  font-size: 36px;
+  outline: 0;
+  border: 2px solid white;
+  border-radius: 40px;
+}
+
+input[type='time']::-webkit-calendar-picker-indicator {
+  background-color: white;
+}
+
+.buttons {
+  display: flex;
+  gap: 10px;
+  padding-bottom: 10px;
+}
+
+.warning .CircularProgressbar-text {
+  font-size: 9px !important;
+}
+button {
+  background-color: rgb(252, 74, 74);
+  color: white;
+  font-size: 20px;
+  border: 0;
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  border-radius: 10px;
+}
+.inputs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+.sessions {
+  width: 100px;
+}

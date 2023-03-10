@@ -4,6 +4,8 @@ import Countdown, { zeroPad } from 'react-countdown'
 import { CircularProgressbar } from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 import ringer from './assets/sound.wav'
+import Confetti from 'react-confetti'
+
 function App() {
   const Timeref = useRef()
   const WorkTime = useRef()
@@ -15,6 +17,8 @@ function App() {
   const [isBreak, setBreak] = useState(false)
   const [autoStart, setAutoStart] = useState(false)
   const [sessionsNumber, setSessionsNumber] = useState(1)
+  const [isExploding, setIsExploding] = useState(false)
+  const [workTime, setWorkTime] = useState(false)
   const handlesetMiliseconds = (e) => {
     let getmiliseconds = 0
     getmiliseconds += parseInt(e.slice(0, 2)) * 3600000
@@ -24,6 +28,8 @@ function App() {
   }
   const audio = new Audio(ringer)
   audio.loop = true
+  const width = window.innerWidth
+  const height = window.innerHeight
   const renderer = ({ hours, minutes, seconds, completed, api }) => {
     if (completed) {
       return <CircularProgressbar className="warning" value={100} text={`Value must be > 0`} />
@@ -45,6 +51,7 @@ function App() {
               Timeref.current.readOnly = true
               BreakTimeRef.current.readOnly = true
               SessionsRef.current.readOnly = true
+              setWorkTime(true)
             }}
           >
             Start
@@ -56,12 +63,25 @@ function App() {
               Timeref.current.readOnly = false
               BreakTimeRef.current.readOnly = false
               SessionsRef.current.readOnly = false
-              setSessionsNumber(1)
               setBreak(false)
+              setWorkTime(false)
             }}
           >
             Reset
           </button>
+
+          {workTime && (
+            <button
+              onClick={() => {
+                setBreak(!isBreak)
+                setIsExploding(true)
+                audio.loop = false
+                audio.play()
+              }}
+            >
+              Skip
+            </button>
+          )}
         </div>
       </>
     )
@@ -99,10 +119,30 @@ function App() {
               BreakTimeRef.current.readOnly = false
               SessionsRef.current.readOnly = false
               setBreak(false)
-              setSessionsNumber(1)
             }}
           >
             Reset
+          </button>
+
+          <button
+            onClick={() => {
+              if (sessionsNumber > 1) {
+                setSessionsNumber(sessionsNumber - 1)
+                setAutoStart(true)
+                setBreak(!isBreak)
+                setIsExploding(false)
+              } else {
+                setAutoStart(false)
+                Timeref.current.readOnly = false
+                BreakTimeRef.current.readOnly = false
+                SessionsRef.current.readOnly = false
+                setSessionsNumber(1)
+                setIsExploding(false)
+                setBreak(!isBreak)
+              }
+            }}
+          >
+            Skip
           </button>
         </div>
       </>
@@ -111,6 +151,7 @@ function App() {
 
   return (
     <div className="App">
+      {isExploding && <Confetti width={width} height={height} tweenDuration={2000} />}
       {!isBreak && (
         <Countdown
           date={Date.now() + handlesetMiliseconds(time)}
@@ -122,7 +163,14 @@ function App() {
               setBreak(!isBreak)
               audio.loop = false
               audio.play()
+              setIsExploding(true)
             }
+            if (sessionsNumber == 1) {
+              setWorkTime(false)
+            }
+          }}
+          onStart={() => {
+            setIsExploding(false)
           }}
         />
       )}
@@ -133,17 +181,19 @@ function App() {
           renderer={renderer2}
           autoStart={true}
           onComplete={() => {
-            setBreak(!isBreak)
             if (sessionsNumber > 1) {
               setSessionsNumber(sessionsNumber - 1)
               setAutoStart(true)
               setBreak(!isBreak)
+              setIsExploding(false)
             } else {
               setAutoStart(false)
               Timeref.current.readOnly = false
               BreakTimeRef.current.readOnly = false
               SessionsRef.current.readOnly = false
               setSessionsNumber(1)
+              setIsExploding(false)
+              setBreak(!isBreak)
             }
           }}
         />

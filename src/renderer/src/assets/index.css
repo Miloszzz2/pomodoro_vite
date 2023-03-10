@@ -99,3 +99,8 @@ button {
 .sessions {
   width: 100px;
 }
+.confetti_wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}

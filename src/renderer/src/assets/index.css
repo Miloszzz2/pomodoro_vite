@@ -28,37 +28,11 @@
   margin-bottom: 20px;
 }
 
-.CircularProgressbar-text {
-  font-size: 16px !important;
-  fill: rgb(252, 74, 74) !important;
-}
-
-.CircularProgressbar2 .CircularProgressbar-text {
-  fill: rgb(74, 252, 89) !important;
-}
-
-.CircularProgressbar2 {
-  fill: rgb(74, 252, 89) !important;
-}
-
-.CircularProgressbar-trail {
-  stroke: transparent !important;
-}
-
-.CircularProgressbar-path {
-  stroke-width: 5;
-  stroke: rgb(252, 74, 74) !important;
-}
-
-.CircularProgressbar2 .CircularProgressbar-path {
-  stroke: rgb(74, 252, 89) !important;
-}
-
 .intervals {
   text-align: center;
 }
 
-.App input {
+.App .textinput {
   margin-top: 20px;
   padding: 5px 10px;
   font-size: 36px;
@@ -81,7 +55,6 @@ input[type='time']::-webkit-calendar-picker-indicator {
   font-size: 9px !important;
 }
 button {
-  background-color: rgb(252, 74, 74);
   color: white;
   font-size: 20px;
   border: 0;
@@ -103,4 +76,60 @@ button {
   position: absolute;
   top: 50%;
   left: 50%;
+}
+.settings_button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  transition: 0.5s opacity;
+}
+.sidepanel {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  background-color: rgba(100, 100, 100, 0.26);
+  width: 250px;
+  backdrop-filter: blur(20px);
+  padding: 30px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  transition: 0.5s width;
+}
+.sidepanel.visible {
+  width: 250px;
+}
+.sidepanel.visible {
+  width: 0px;
+}
+.sidepanel h2 {
+  color: white;
+  font-weight: 600;
+  text-align: center;
+}
+.colorinput {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 20px;
+}
+.colorinputcustomstyle {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 50px;
+  height: 50px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+.colorinputcustomstyle::-webkit-color-swatch {
+  border-radius: 15px;
+  border: 5px solid black;
+}
+.colorinputcustomstyle::-moz-color-swatch {
+  border-radius: 15px;
+  border: none;
 }

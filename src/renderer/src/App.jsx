@@ -6,7 +6,6 @@ import 'react-circular-progressbar/dist/styles.css'
 import ringer from './assets/sound.wav'
 import Confetti from 'react-confetti'
 import SidePanel from './components/Sidepanel'
-
 function App() {
   const Timeref = useRef()
   const WorkTime = useRef()

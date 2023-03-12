@@ -1,6 +1,6 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/prop-types */
-import Settings from '../assets/settings.png'
+import Settings from '/settings.png'
 function SidePanel(props) {
   return (
     <>

@@ -207,6 +207,11 @@ function App() {
             setTime(e.target.value)
           }}
           ref={Timeref}
+          onKeyDown={(e) => {
+            if (e.key === 'Backspace') {
+              e.preventDefault()
+            }
+          }}
         />
         <input
           type="time"
@@ -216,6 +221,11 @@ function App() {
             setBreakTime(e.target.value)
           }}
           ref={BreakTimeRef}
+          onKeyDown={(e) => {
+            if (e.key === 'Backspace') {
+              e.preventDefault()
+            }
+          }}
         />
         <input
           type="number"

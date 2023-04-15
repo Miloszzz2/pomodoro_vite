@@ -6,14 +6,23 @@ import 'react-circular-progressbar/dist/styles.css'
 import ringer from './assets/sound.wav'
 import Confetti from 'react-confetti'
 import SidePanel from './components/Sidepanel'
+
 function App() {
   const Timeref = useRef()
   const WorkTime = useRef()
   const BreakTime = useRef()
   const BreakTimeRef = useRef()
   const SessionsRef = useRef()
-  const [time, setTime] = useState(`00:25:00`)
+  const handlesetMiliseconds = (e) => {
+    let getmiliseconds = 0
+    getmiliseconds += parseInt(e.slice(0, 2)) * 3600000
+    getmiliseconds += parseInt(e.slice(3, 5)) * 60000
+    getmiliseconds += parseInt(e.slice(6)) * 1000
+    return getmiliseconds
+  }
+  const [time, setTime] = useState(`00:00:01`)
   const [breakTime, setBreakTime] = useState('00:05:00')
+  const [countdownValue, setCountdownValue] = useState(Date.now() + handlesetMiliseconds(breakTime))
   const [isBreak, setBreak] = useState(false)
   const [autoStart, setAutoStart] = useState(false)
   const [sessionsNumber, setSessionsNumber] = useState(1)
@@ -23,14 +32,6 @@ function App() {
   const [BreakTimeColor, setBreakTimeColor] = useState('#4afc59')
   const [ButtonColor, setButtonColor] = useState('#fc4a4a')
   const [active, setActive] = useState(false)
-  console.log(isBreak)
-  const handlesetMiliseconds = (e) => {
-    let getmiliseconds = 0
-    getmiliseconds += parseInt(e.slice(0, 2)) * 3600000
-    getmiliseconds += parseInt(e.slice(3, 5)) * 60000
-    getmiliseconds += parseInt(e.slice(6)) * 1000
-    return getmiliseconds
-  }
   const audio = new Audio(ringer)
   audio.loop = true
   const width = window.innerWidth
@@ -113,6 +114,7 @@ function App() {
               SessionsRef.current.readOnly = false
               setBreak(false)
               setWorkTime(false)
+              setSessionsNumber(1)
               setIsExploding(false)
             }}
             style={{ backgroundColor: ButtonColor }}
@@ -124,7 +126,11 @@ function App() {
             <button
               onClick={() => {
                 setBreak(!isBreak)
+                setCountdownValue(Date.now() + handlesetMiliseconds(breakTime))
                 setIsExploding(true)
+                setTimeout(() => {
+                  setIsExploding(false)
+                }, 5000)
                 audio.loop = false
                 audio.play()
               }}
@@ -190,7 +196,10 @@ function App() {
               BreakTimeRef.current.readOnly = false
               SessionsRef.current.readOnly = false
               setBreak(false)
+              setSessionsNumber(1)
               setIsExploding(false)
+              setAutoStart(false)
+              setWorkTime(false)
             }}
             style={{ backgroundColor: ButtonColor }}
           >
@@ -199,19 +208,17 @@ function App() {
 
           <button
             onClick={() => {
+              setBreak(!isBreak)
+              setIsExploding(false)
               if (sessionsNumber > 1) {
                 setSessionsNumber(sessionsNumber - 1)
                 setAutoStart(true)
-                setBreak(!isBreak)
-                setIsExploding(false)
               } else {
                 setAutoStart(false)
                 Timeref.current.readOnly = false
                 BreakTimeRef.current.readOnly = false
                 SessionsRef.current.readOnly = false
                 setSessionsNumber(1)
-                setIsExploding(false)
-                setBreak(!isBreak)
               }
             }}
             style={{ backgroundColor: ButtonColor }}
@@ -222,7 +229,6 @@ function App() {
       </>
     )
   }
-
   return (
     <>
       <div
@@ -244,6 +250,10 @@ function App() {
                 audio.loop = false
                 audio.play()
                 setIsExploding(true)
+                setCountdownValue(Date.now() + handlesetMiliseconds(breakTime))
+                setTimeout(() => {
+                  setIsExploding(false)
+                }, 5000)
               }
               if (sessionsNumber == 1) {
                 setWorkTime(false)
@@ -257,23 +267,21 @@ function App() {
         {isBreak && (
           <Countdown
             ref={BreakTime}
-            date={Date.now() + handlesetMiliseconds(breakTime)}
+            date={countdownValue}
             renderer={renderer2}
             autoStart={true}
             onComplete={() => {
+              setBreak(!isBreak)
+              setCountdownValue(Date.now() + handlesetMiliseconds(breakTime))
               if (sessionsNumber > 1) {
                 setSessionsNumber(sessionsNumber - 1)
                 setAutoStart(true)
-                setBreak(!isBreak)
-                setIsExploding(false)
               } else {
                 setAutoStart(false)
                 Timeref.current.readOnly = false
                 BreakTimeRef.current.readOnly = false
                 SessionsRef.current.readOnly = false
                 setSessionsNumber(1)
-                setIsExploding(false)
-                setBreak(!isBreak)
               }
             }}
           />

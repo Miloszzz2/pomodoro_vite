@@ -20,7 +20,7 @@ function App() {
     getmiliseconds += parseInt(e.slice(6)) * 1000
     return getmiliseconds
   }
-  const [time, setTime] = useState(`00:00:01`)
+  const [time, setTime] = useState(`00:25:00`)
   const [breakTime, setBreakTime] = useState('00:05:00')
   const [countdownValue, setCountdownValue] = useState(Date.now() + handlesetMiliseconds(breakTime))
   const [isBreak, setBreak] = useState(false)
